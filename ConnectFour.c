@@ -1,7 +1,7 @@
 /*
  * Creators: Fasih Hasan, Syed Ukkashah, Muhammad Ali
  * Date (Last changed): 23/11/23
- * Desc: A game called connect 4. First player to create a sequence of 4 characters in a row in a 6 by 7 grid will win
+ * Desc: A game called connect 4. First player to create a sequence of 4 characters in a 6 by 7 grid will win
  */
 
 #include <stdio.h>
