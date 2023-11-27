@@ -14,14 +14,23 @@
 #define P2 'B'
 #define X '.'
 
+// create a game grid
+char **create_game_grid(); // by Ali, modification by Fasih
+
 // uses the window lib to color the text
 void color_char(char player); // by Fasih
+
+// print the game grid
+void print_grid(char **grid); // by Ali, modified by Fasih and Ukkashah
 
 // update the frame by clearing the screen and printing the grid
 void update_frame(char **grid); // by Fasih
 
 // validate a move in the specified column
 bool validate_move(char **grid, int col); // by Fasih
+
+// displays relevant game end screen to player
+void game_end_display(char **grid, int player, bool type); // by Ali
 
 /*
 		to-do:
@@ -74,6 +83,23 @@ int main()
 	return 0; // end
 } // end main()
 
+char **create_game_grid()
+{
+	// creates double pointer for number of rows
+	char **grid = (char **)malloc(sizeof(char *) * rows);
+
+	// creates single pointers and sets them in all rows
+	for (int i = 0; i < rows; i++) {
+		grid[i] = (char *)malloc(sizeof(char) * cols);
+	}
+
+	// initializing as default
+	for (int i = 0; i < rows; i++) {
+		memset(grid[i], X, cols);
+	}
+
+	return grid;
+} // end create_game_grid()
 
 void color_char(char player)
 {
@@ -93,6 +119,41 @@ void color_char(char player)
     SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), 14); // reset to default game color
 } // end color_char()
 
+void print_grid(char **grid)
+{
+	
+	printf("%-4c", ' ');
+	for (int i = 0; i < cols; i++) {
+		printf("%-4d", i+1);
+	}
+	printf("\n");
+	printf("%-2c|", ' ');
+	for (int i = 2; i <= cols*4; i++) printf("%c", '-');
+	printf("|");
+
+	printf("\n");
+	for (int i = 0; i < rows; i++) {
+		printf("%d | ", i+1);
+		for (int j = 0; j < cols; j++) {
+			if (j == cols - 1) {
+				color_char(grid[i][j]);
+				printf(" |");
+				break;
+			}
+			color_char(grid[i][j]);
+			printf("%-3c", ' ');
+		}
+		if (i == rows - 1) continue;
+		printf("\n");
+		printf("%3c", '|');
+		for (int i = 2; i < cols*4; i++) printf("%c", ' ');
+		printf(" |\n");
+	}
+	printf("\n");
+	printf("%-2c|", ' ');
+	for (int i = 2; i <= cols*4; i++) printf("%c", '-');
+	printf("|\n\n");
+} // end print_grid(Player **)
 
 void update_frame(char **grid)
 {
